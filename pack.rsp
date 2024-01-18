@@ -1,0 +1,8 @@
+solution
+pack
+--verbose
+--excludes
+"**/obj"
+"**/bin"
+"**/.vs"
+"**/*.csproj.user"

@@ -1,0 +1,108 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TicTacToeApp.MainPage">
+
+    <StackLayout>
+        <!-- Pelimuodon valinta, vaihtoehtoina pvp tai PvAi -->
+        <StackLayout x:Name="GameMode" IsVisible="False" Margin="0,200,0,0">
+            <Label x:Name="gamemode" Text="Valitse pelimuoto" Margin="30"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="72"/>
+
+            <Button x:Name="PvP" Text="PvP" Clicked="PvP_Clicked" Margin="30" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="150" FontSize="36"/>
+            <Button x:Name="PvAI" Text="PvAI" Clicked="PvAI_Clicked" Margin="30" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="150" FontSize="36"/>
+        </StackLayout>
+        
+        <!-- Pelaajien lisäys -->
+        <Button x:Name="AddPlayers" Text="Lisää pelaaja" Clicked="AddPlayersButtonClicked" Margin="0,200,0,50" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="150" FontSize="18" IsVisible="false"/>
+        <StackLayout x:Name="PlayerEntry" IsVisible="False">
+            <Label Text="Syötä uuden pelaajan tiedot" FontSize="Title" HorizontalOptions="CenterAndExpand" Margin="0,100,0,0" />
+
+            <Entry x:Name="FirstNameEntry" Placeholder="Etunimi" Margin="20" MaximumWidthRequest="400"/>
+            <Entry x:Name="LastNameEntry" Placeholder="Sukunimi" Margin="20" MaximumWidthRequest="400"/>
+            <Label Text="Syntymäpäivä" Margin="0,20,0,0" HorizontalOptions="Center"/>
+            <DatePicker x:Name="MyDatePicker" Margin="20" HorizontalOptions="Center"/>
+
+            <Button Text="Lisää pelaaja" Clicked="OnAddPlayerClicked" HorizontalOptions="Center" Margin="20" />
+        </StackLayout>
+
+        <!-- Pelaajien valinta -->
+        <StackLayout x:Name="PlayerSelect" IsVisible="false">
+            <Grid HorizontalOptions="CenterAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Pickerit -->
+                <Picker x:Name="PlayerPicker" Title="Valitse pelaaja X" Grid.Row="0" Grid.Column="0" SelectedIndexChanged="OnPlayerPickerSelectedIndexChanged" Margin="20" WidthRequest="300"/>
+                <Picker x:Name="PlayerPickerO" Title="Valitse pelaaja O" Grid.Row="0" Grid.Column="1" SelectedIndexChanged="OnPlayerPickerOSelectedIndexChanged" Margin="20" WidthRequest="300"/>
+            </Grid>
+        </StackLayout>
+
+        
+        
+        <!-- Pelilauta -->
+        <Grid x:Name="GameGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="0,150,0,-50" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button x:Name="Button00" Grid.Row="0" Grid.Column="0" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button01" Grid.Row="0" Grid.Column="1" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button02" Grid.Row="0" Grid.Column="2" Clicked="OnButtonClicked"/>
+
+            <Button x:Name="Button10" Grid.Row="1" Grid.Column="0" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button11" Grid.Row="1" Grid.Column="1" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button12" Grid.Row="1" Grid.Column="2" Clicked="OnButtonClicked"/>
+
+            <Button x:Name="Button20" Grid.Row="2" Grid.Column="0" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button21" Grid.Row="2" Grid.Column="1" Clicked="OnButtonClicked"/>
+            <Button x:Name="Button22" Grid.Row="2" Grid.Column="2" Clicked="OnButtonClicked"/>
+        </Grid>
+
+        <!-- Pelaajien tiedot, sekä statistiikat -->
+        <Grid x:Name="PlayerInfo" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Pelaaja X:" FontSize="Title"  Grid.Row="0" Grid.Column="0" Margin="25,25,250,25"/>
+            <Label x:Name="PlayerInfoLabel" Grid.Row="1" Grid.Column="0" Margin="25,25,250,25"/>
+
+            <Label Text="Pelaaja O:" FontSize="Title" Grid.Row="0" Grid.Column="1" Margin="250,25,25,25"/>
+            <Label x:Name="Player2InfoLabel" Grid.Row="1" Grid.Column="1" Margin="250,25,25,25" />
+
+            
+        </Grid>
+        <!-- Muu sälä sivun alaosassa, nimet kertovat aika hyvin mikä on mikä :) -->
+        <StackLayout x:Name="PohjaNapit" IsVisible="False">
+
+            <Label x:Name="CurrentTurnLabel" Text="Pelaajan vuoro." FontSize="18" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="10"/>
+            <Label x:Name="ResultLabel" Text="Tulos: " HorizontalOptions="CenterAndExpand" Margin="10"/>
+            <Button Text="Uusi peli" Clicked="OnResetClicked" HorizontalOptions="CenterAndExpand" Margin="10"/>
+        </StackLayout>
+        
+            <!-- Pelin aloitusnappi -->
+        <Button x:Name="StartButton" Text="Aloita peli :)" Clicked="StartButtonClick" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="120" Margin="0,0,0,30"/>
+        <Button x:Name="ResetButton" Text="Aloita alusta" Clicked="RestartAppClicked" IsVisible="False" HorizontalOptions="Center" VerticalOptions="End" WidthRequest="120" Margin="0,0,0,30"/>
+    </StackLayout>
+
+</ContentPage>
